@@ -1,4 +1,5 @@
 import express from 'express';
+import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
@@ -33,4 +34,6 @@ if (existsSync(dist)) {
 }
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));
+const server = http.createServer(app);
+server.on('error', (err) => { console.error('Server error:', err.message); process.exit(1); });
+server.listen(PORT, () => console.log(`Server on http://localhost:${PORT}`));
