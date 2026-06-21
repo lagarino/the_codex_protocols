@@ -5,8 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev          # dev server → http://localhost:5173
-npm run build        # production build → dist/
+# Development — run both in separate terminals
+npm run dev          # Vite dev server → http://localhost:5173
+npm run dev:server   # Express API server → http://localhost:3001
+
+# Production
+npm run build        # Vite build → dist/
+npm start            # Express serves dist/ + API on $PORT (default 3001)
+
+# Tests
 npm run test         # run all tests once (vitest)
 npm run test:watch   # vitest in watch mode
 
@@ -42,5 +49,7 @@ npx vitest run -t "merges attached leader"
 - `print.js → buildPrintOutput(rawData, format, armyState)` — returns a self-contained HTML document (A4 landscape, auto-prints on load). Calls format-aware `parseFullUnit` to fetch full stats/weapons per unit.
 
 **Adding a new format:** Implement `parseFoo(data)` returning `{ leaders, groups, characters }` and `parseFullUnit(data, id)` returning full unit stats. Register in `detectFormat` and `store.loadFile`. No other files need changing.
+
+**Backend server** (`server/index.js`): Lightweight Express 5 app. In development, only the `/api/yellowscribe` route is active — Vite dev server handles the frontend and proxies `/api/*` to Express on port 3001 (configured in `vite.config.js`). In production (or after `npm run build`), the server also serves `dist/` and catches unknown paths with `index.html` for SPA routing. The proxy route POSTs the army JSON to `https://yellowscribe.link/getArmyCode` server-to-server (no CORS restriction), then returns `{ code }` to the browser. `PORT` env var overrides the default port 3001. The `Dockerfile` is a two-stage build (Node 22 Alpine): stage 1 builds the Vite frontend, stage 2 assembles a lean runtime image with `--omit=dev` deps, `server/`, and `dist/`.
 
 **Tests** use real fixture data from `tests/fixtures/`. Parser and engine modules are pure functions tested directly with Vitest + jsdom. No mocking of parsers or the store in engine tests.

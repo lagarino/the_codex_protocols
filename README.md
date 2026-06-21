@@ -8,10 +8,59 @@ a print-ready card sheet or a modified TTS save file.
 
 ```bash
 npm install
-npm run dev        # dev server at http://localhost:5173
 npm run test       # run all tests once
 npm run test:watch # re-run tests on save
-npm run build      # production build → dist/
+```
+
+## Development
+
+The app has two processes that must run together in separate terminals:
+
+```bash
+# Terminal 1 — Express API server (proxies Yellowscribe upload server-side)
+npm run dev:server   # → http://localhost:3001
+
+# Terminal 2 — Vite dev server (React frontend)
+npm run dev          # → http://localhost:5173
+```
+
+Open `http://localhost:5173`. Vite proxies `/api/*` requests to the Express server automatically, so the "Export Yellowscribe" button works without CORS issues.
+
+## Deployment
+
+### Docker (recommended for AWS)
+
+```bash
+# Build image — compiles the Vite frontend and assembles a lean Node 22 runtime
+docker build -t codex-protocols .
+
+# Run locally to verify
+docker run -p 3001:3001 codex-protocols
+# → http://localhost:3001
+```
+
+The container serves both the React SPA and the `/api/yellowscribe` proxy from a single port. Set the `PORT` environment variable to override the default (3001):
+
+```bash
+docker run -p 8080:8080 -e PORT=8080 codex-protocols
+```
+
+### AWS options
+
+All three approaches use the same Docker image:
+
+| Option | Notes |
+|---|---|
+| **ECS / Fargate** | Push image to ECR, create a Fargate service, point an ALB to the container port |
+| **Elastic Beanstalk** | Use the "Docker" platform; EB sets `PORT` automatically |
+| **EC2** | Pull image, run with `docker run -d -p 80:3001 codex-protocols` |
+
+### Without Docker (Node.js host)
+
+```bash
+npm install
+npm run build      # compiles frontend → dist/
+npm start          # serves dist/ + API on $PORT (default 3001)
 ```
 
 ## Supported input formats
