@@ -1,0 +1,116 @@
+{
+  "edition": "10e",
+  "order": ["ldr1", "ldr2", "grp1", "grp2", "char1"],
+  "units": {
+    "ldr1": {
+      "name": "Lokhust Lord",
+      "factionKeywords": ["Necrons"],
+      "keywords": ["Character", "Fly", "Lokhust Lord", "Mounted"],
+      "isSingleModel": true,
+      "uuid": "ldr1",
+      "models": { "totalNumberOfModels": 1, "models": { "m1": {
+        "name": "Lokhust Lord", "number": 1,
+        "abilities": ["Leader", "Resurrection Orb", "Destroyer Cult"],
+        "weapons": [{"name": "Staff of light", "number": 1}]
+      }}},
+      "abilities": {
+        "Leader":           {"name": "Leader",           "desc": "Leader rule text."},
+        "Resurrection Orb": {"name": "Resurrection Orb", "desc": "Resurrect D6 wounds."},
+        "Destroyer Cult":   {"name": "Destroyer Cult",   "desc": "Critical hits on 5+."}
+      },
+      "modelProfiles": {
+        "Lokhust Lord": {"m": "8\"", "t": "6", "sv": "3+", "w": "6", "ld": "6+", "oc": "2", "name": "Lokhust Lord"}
+      },
+      "weapons": {
+        "Staff of light": {"range": "18\"", "a": "3", "bsws": "2+", "s": "7", "ap": "-2", "d": "1", "abilities": "-", "name": "Staff of light"}
+      }
+    },
+    "ldr2": {
+      "name": "Technomancer",
+      "factionKeywords": ["Necrons"],
+      "keywords": ["Character", "Cryptek", "Fly", "Infantry"],
+      "isSingleModel": true,
+      "uuid": "ldr2",
+      "models": { "totalNumberOfModels": 1, "models": { "m1": {
+        "name": "Technomancer", "number": 1,
+        "abilities": ["Leader", "Rites of Reanimation", "Murdermind"],
+        "weapons": [{"name": "Staff of light", "number": 1}]
+      }}},
+      "abilities": {
+        "Leader":               {"name": "Leader",               "desc": "Leader rule text."},
+        "Rites of Reanimation": {"name": "Rites of Reanimation", "desc": "Feel No Pain 5+."},
+        "Murdermind":           {"name": "Murdermind",           "desc": "Destroyer Cult keyword."}
+      },
+      "modelProfiles": {
+        "Technomancer": {"m": "5\"", "t": "4", "sv": "4+", "w": "4", "ld": "6+", "oc": "1", "name": "Technomancer"}
+      },
+      "weapons": {
+        "Staff of light": {"range": "18\"", "a": "3", "bsws": "4+", "s": "7", "ap": "-2", "d": "1", "abilities": "-", "name": "Staff of light"}
+      }
+    },
+    "grp1": {
+      "name": "Lokhust Heavy Destroyers",
+      "factionKeywords": ["Necrons"],
+      "keywords": ["Destroyer Cult", "Fly", "Mounted"],
+      "isSingleModel": false,
+      "uuid": "grp1",
+      "models": { "totalNumberOfModels": 3, "models": { "m1": {
+        "name": "Destroyer", "number": 3,
+        "abilities": ["Optimised For Slaughter"],
+        "weapons": [{"name": "Enmitic exterminator", "number": 1}]
+      }}},
+      "abilities": {
+        "Optimised For Slaughter": {"name": "Optimised For Slaughter", "desc": "Re-roll wound rolls of 1."}
+      },
+      "modelProfiles": {
+        "Lokhust Heavy Destroyers": {"m": "8\"", "t": "6", "sv": "3+", "w": "4", "ld": "7+", "oc": "2", "name": "Lokhust Heavy Destroyers"}
+      },
+      "weapons": {
+        "Enmitic exterminator": {"range": "36\"", "a": "6", "bsws": "3+", "s": "8", "ap": "-1", "d": "1", "abilities": "Heavy, Rapid Fire 6", "name": "Enmitic exterminator"}
+      }
+    },
+    "grp2": {
+      "name": "Necron Warriors",
+      "factionKeywords": ["Necrons"],
+      "keywords": ["Battleline", "Infantry", "Necron Warriors"],
+      "isSingleModel": false,
+      "uuid": "grp2",
+      "models": { "totalNumberOfModels": 20, "models": { "m1": {
+        "name": "Warrior", "number": 20,
+        "abilities": ["Their Number is Legion"],
+        "weapons": [{"name": "Gauss reaper", "number": 1}]
+      }}},
+      "abilities": {
+        "Their Number is Legion": {"name": "Their Number is Legion", "desc": "Re-roll reanimation dice."}
+      },
+      "modelProfiles": {
+        "Necron Warriors": {"m": "5\"", "t": "4", "sv": "4+", "w": "1", "ld": "7+", "oc": "2", "name": "Necron Warriors"}
+      },
+      "weapons": {
+        "Gauss reaper": {"range": "12\"", "a": "2", "bsws": "4+", "s": "4", "ap": "-1", "d": "1", "abilities": "Lethal Hits", "name": "Gauss reaper"}
+      }
+    },
+    "char1": {
+      "name": "C'tan Shard",
+      "factionKeywords": ["Necrons"],
+      "keywords": ["Character", "Epic Hero", "Fly", "Monster"],
+      "isSingleModel": true,
+      "uuid": "char1",
+      "models": { "totalNumberOfModels": 1, "models": { "m1": {
+        "name": "C'tan", "number": 1,
+        "abilities": ["Matter Absorption", "Necrodermis"],
+        "weapons": [{"name": "Voltaic storm", "number": 1}]
+      }}},
+      "abilities": {
+        "Matter Absorption": {"name": "Matter Absorption", "desc": "Drain VEHICLE units."},
+        "Necrodermis":       {"name": "Necrodermis",       "desc": "Subtract 1 from Damage."}
+      },
+      "modelProfiles": {
+        "C'tan Shard": {"m": "10\"", "t": "11", "sv": "3+", "w": "16", "ld": "6+", "oc": "4", "name": "C'tan Shard"}
+      },
+      "weapons": {
+        "Voltaic storm": {"range": "18\"", "a": "D6+3", "bsws": "2+", "s": "7", "ap": "-1", "d": "2", "abilities": "Blast", "name": "Voltaic storm"}
+      }
+    }
+  }
+}

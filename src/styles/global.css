@@ -1,0 +1,121 @@
+/* ── Reset & base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void:       #0a0a0f;
+  --surface:    #13131f;
+  --card:       #1a1a2e;
+  --card-hover: #1f1f38;
+  --gold:       #c8a96e;
+  --gold-dim:   #8a7050;
+  --gold-glow:  rgba(200,169,110,0.15);
+  --blue:       #4a9eff;
+  --blue-dim:   rgba(74,158,255,0.12);
+  --blue-glow:  rgba(74,158,255,0.25);
+  --red:        #e85545;
+  --border:     #2a2a3f;
+  --border-lit: #3a3a5f;
+  --text:       #d0cfe8;
+  --text-dim:   #7a7998;
+  --text-faint: #3a3a5f;
+  --success:    #4ade80;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--void);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-lit); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn-ghost { background: transparent; border-color: var(--border-lit); color: var(--text-dim); }
+.btn-ghost:hover:not(:disabled) { border-color: var(--gold-dim); color: var(--gold); }
+
+.btn-primary { background: var(--gold); border-color: var(--gold); color: var(--void); }
+.btn-primary:hover:not(:disabled) { background: #dfc07f; }
+
+.btn-danger { background: transparent; border-color: var(--red); color: var(--red); }
+.btn-danger:hover:not(:disabled) { background: rgba(232,85,69,0.1); }
+
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.unit-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+  user-select: none;
+}
+
+.card-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+.card-role {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.role-leader  { background: rgba(200,169,110,0.15); color: var(--gold);  border: 1px solid var(--gold-dim); }
+.role-support { background: rgba(74,158,255,0.12);  color: var(--blue);  border: 1px solid rgba(74,158,255,0.3); }
+
+.count-badge {
+  font-size: 10px;
+  color: var(--text-faint);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.pill {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--border-lit);
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.03);
+  white-space: nowrap;
+}
+.pill.inherited      { border-color: rgba(200,169,110,0.3); color: var(--gold-dim); background: rgba(200,169,110,0.06); }
+.pill.inherited-back { border-color: rgba(74,158,255,0.3);  color: #7ab8ff;         background: rgba(74,158,255,0.06); }
