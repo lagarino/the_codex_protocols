@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useStore from '../state/store.js';
 
 export default function AbilityModal({ leaderId, groupUuid, onClose }) {
-  const { leaders, groups, attachments, attach } = useStore();
+  const { leaders, groups, attachments, excludedAbilities, attach } = useStore();
 
   const leader = leaders.find(l => l.id === leaderId);
   const group  = groups.find(g => g.uuid === groupUuid);
@@ -20,13 +20,24 @@ export default function AbilityModal({ leaderId, groupUuid, onClose }) {
     setFn(next);
   }
 
+  const leaderExcluded = excludedAbilities.get(String(leaderId)) || new Set();
+  const groupExcluded  = excludedAbilities.get(String(group.uuid)) || new Set();
+
+  const leaderAbils = leader.abilities.filter(
+    a => a.name !== 'Leader' && a.name !== 'Support' && !leaderExcluded.has(a.name)
+  );
+  const groupAbils = group.abilities.filter(a => !groupExcluded.has(a.name));
+
   function confirm() {
-    attach(leaderId, groupUuid, [...fwd], [...rev]);
+    const visibleFwd = new Set(leaderAbils.map(a => a.name));
+    const visibleRev = new Set(groupAbils.map(a => a.name));
+    attach(
+      leaderId, groupUuid,
+      [...fwd].filter(n => visibleFwd.has(n)),
+      [...rev].filter(n => visibleRev.has(n)),
+    );
     onClose();
   }
-
-  const leaderAbils = leader.abilities.filter(a => a.name !== 'Leader' && a.name !== 'Support');
-  const groupAbils  = group.abilities;
 
   return (
     <div style={{

@@ -5,7 +5,7 @@
  * Pure functions: (armyState, rawData) → HTML string. No DOM side effects.
  */
 
-import { parseFullUnitTTS }          from '../parser/tts.js';
+import { parseFullUnit as parseFullUnitTTS } from '../parser/tts.js';
 import { parseFullUnit as parseFullUnitYS } from '../parser/yellowscribe.js';
 
 // ── Format-aware unit lookup ──────────────────────────────────────────────
@@ -103,7 +103,7 @@ export function buildPrintCard(group, attachedLeader, rawData, format, attachmen
     : [];
 
   // Apply exclusion filters
-  const groupId  = group.indices[0];
+  const groupId  = group.uuid;
   const leaderId = attachedLeader?.id;
 
   const visShared    = filterAbilities(groupId, sharedAbilities.filter(ab =>

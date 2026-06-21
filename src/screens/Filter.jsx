@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import useStore from '../state/store.js';
-import { parseFullUnitTTS }  from '../parser/tts.js';
+import { parseFullUnit as parseFullUnitTTS } from '../parser/tts.js';
 import { parseFullUnit as parseFullUnitYS } from '../parser/yellowscribe.js';
 
 function parseFullUnit(rawData, format, id) {
@@ -38,7 +38,7 @@ export default function Filter() {
 
       {/* Grid of unit blocks */}
       <div style={{ flex: 1, overflowY: 'auto', padding: 20,
-                    display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+                    display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
                     gap: 14, alignContent: 'start' }}>
         {blocks.map((block, i) => (
           <FilterBlock key={i} block={block} rawData={rawData} format={format}
@@ -131,17 +131,19 @@ function FilterBlock({ block, rawData, format, excludedAbilities, toggleAbility,
             </strong>
           </div>
         </div>
-        {groupUnit && <>
-          <SectionLabel>{group.name} Abilities</SectionLabel>
-          {renderAbilityList(group.uuid, groupUnit.ownAbilities)}
-        </>}
-        {attachedLeaders.map(leader => {
-          const lu = parseFullUnit(rawData, format, leader.objIdx);
-          return lu ? <div key={leader.id}>
-            <SectionLabel>{leader.name} Abilities</SectionLabel>
-            {renderAbilityList(leader.id, lu.ownAbilities)}
-          </div> : null;
-        })}
+        <div style={bodyStyle}>
+          {groupUnit && <>
+            <SectionLabel>{group.name} Abilities</SectionLabel>
+            {renderAbilityList(group.uuid, groupUnit.ownAbilities)}
+          </>}
+          {attachedLeaders.map(leader => {
+            const lu = parseFullUnit(rawData, format, leader.objIdx);
+            return lu ? <div key={leader.id}>
+              <SectionLabel>{leader.name} Abilities</SectionLabel>
+              {renderAbilityList(leader.id, lu.ownAbilities)}
+            </div> : null;
+          })}
+        </div>
       </div>
     );
   }
@@ -155,10 +157,12 @@ function FilterBlock({ block, rawData, format, excludedAbilities, toggleAbility,
           <div style={nameStyle}>{leader.name}</div>
           <span className={`card-role role-${leader.role.toLowerCase()}`}>{leader.role}</span>
         </div>
-        {u && <>
-          <SectionLabel>Abilities</SectionLabel>
-          {renderAbilityList(leader.id, u.ownAbilities)}
-        </>}
+        <div style={bodyStyle}>
+          {u && <>
+            <SectionLabel>Abilities</SectionLabel>
+            {renderAbilityList(leader.id, u.ownAbilities)}
+          </>}
+        </div>
       </div>
     );
   }
@@ -174,10 +178,12 @@ function FilterBlock({ block, rawData, format, excludedAbilities, toggleAbility,
             Character
           </span>
         </div>
-        {u && <>
-          <SectionLabel>Abilities</SectionLabel>
-          {renderAbilityList(String(char.objIdx), u.ownAbilities)}
-        </>}
+        <div style={bodyStyle}>
+          {u && <>
+            <SectionLabel>Abilities</SectionLabel>
+            {renderAbilityList(String(char.objIdx), u.ownAbilities)}
+          </>}
+        </div>
       </div>
     );
   }
@@ -191,10 +197,12 @@ function FilterBlock({ block, rawData, format, excludedAbilities, toggleAbility,
           <div style={nameStyle}>{group.name}</div>
           <span className="count-badge">{group.models} model{group.models !== 1 ? 's' : ''}</span>
         </div>
-        {u && <>
-          <SectionLabel>Abilities</SectionLabel>
-          {renderAbilityList(group.uuid, u.ownAbilities)}
-        </>}
+        <div style={bodyStyle}>
+          {u && <>
+            <SectionLabel>Abilities</SectionLabel>
+            {renderAbilityList(group.uuid, u.ownAbilities)}
+          </>}
+        </div>
       </div>
     );
   }
@@ -255,6 +263,10 @@ function SectionLabel({ children }) {
 
 const blockStyle = {
   background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 6, overflow: 'hidden',
+  display: 'flex', flexDirection: 'column',
+};
+const bodyStyle = {
+  overflowY: 'auto', maxHeight: 420,
 };
 const headerStyle = {
   padding: '10px 14px', background: 'var(--surface)',

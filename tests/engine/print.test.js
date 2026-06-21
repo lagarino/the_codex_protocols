@@ -197,8 +197,8 @@ describe('buildPrintOutput', () => {
     // Both names should appear in the document (in the same card)
     expect(html).toContain(lord.name);
     expect(html).toContain(destroyers.name);
-    // Leader should not get a solo card
+    // Attached leader should not get a solo card; ldr2 (Technomancer) is still unattached → 1
     const leaderCardCount = (html.match(/pc-role-badge.*?Leader/g) || []).length;
-    expect(leaderCardCount).toBe(0); // attached leader has no solo card
+    expect(leaderCardCount).toBe(1); // ldr1 merged into card; ldr2 solo card remains
   });
 });
