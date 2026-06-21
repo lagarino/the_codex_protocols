@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useStore from '../state/store.js';
 import { generateOutput } from '../engine/output.js';
 import { buildPrintOutput } from '../engine/print.js';
+import { generateYellowscribe } from '../engine/yellowscribe.js';
 
 export default function Header() {
   const fileInputRef = useRef(null);
@@ -44,6 +45,19 @@ export default function Header() {
     const a      = document.createElement('a');
     a.href       = url;
     a.download   = filename.replace(/\.json$/i, '') + '_modified.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleExportYellowscribe() {
+    const armyState = { leaders, groups, characters, attachments, excludedAbilities };
+    const output = generateYellowscribe(rawData, format, armyState);
+    const json   = JSON.stringify(output, null, 2);
+    const blob   = new Blob([json], { type: 'application/json' });
+    const url    = URL.createObjectURL(blob);
+    const a      = document.createElement('a');
+    a.href       = url;
+    a.download   = filename.replace(/\.json$/i, '') + '_yellowscribe.json';
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -106,6 +120,12 @@ export default function Header() {
                 title={!isTTS ? 'Export to TTS JSON is only available for TTS files' : ''}
                 onClick={handleExport}>
           ⬇ Export JSON
+        </button>
+
+        {/* Export Yellowscribe */}
+        <button className="btn btn-ghost" disabled={!hasData}
+                onClick={handleExportYellowscribe}>
+          ⬇ Export Yellowscribe
         </button>
 
         {/* Print */}
