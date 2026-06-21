@@ -19,7 +19,7 @@ npx vitest run -t "merges attached leader"
 
 ## Architecture
 
-**Data flow:** JSON file → `detectFormat` → `parseTTS` or `parseYellowscribe` → internal army model stored in Zustand → UI reads from store → `generateOutput` (TTS JSON) or `buildPrintOutput` (HTML) produce artifacts.
+**Data flow:** JSON file → `detectFormat` → `parseTTS` or `parseYellowscribe` → internal army model stored in Zustand → UI reads from store → `generateOutput` (TTS JSON), `generateYellowscribe` (Yellowscribe JSON), or `buildPrintOutput` (HTML) produce artifacts.
 
 **Internal army model** (flat arrays, format-agnostic):
 - `leaders` — Character units with a `Leader` or `Support` ability. Have `id`, `name`, `role`, `objIdx`, `abilities`, `keywords`.
@@ -38,6 +38,7 @@ npx vitest run -t "merges attached leader"
 
 **Output engines** (`src/engine/`) are pure functions — no DOM, no store access:
 - `output.js → generateOutput(rawData, armyState)` — deep-clones the TTS JSON, strips excluded abilities from `Description` and `LuaScript`, injects shared abilities, applies font scaling.
+- `yellowscribe.js → generateYellowscribe(rawData, format, armyState)` — produces a Yellowscribe JSON from either input format. For Yellowscribe input: clone + patch. For TTS input: converts from scratch via `parseFullUnitTTS`. Shared abilities are written as `"Ability (from Unit Name)"` in both the `abilities` dict and model ability list.
 - `print.js → buildPrintOutput(rawData, format, armyState)` — returns a self-contained HTML document (A4 landscape, auto-prints on load). Calls format-aware `parseFullUnit` to fetch full stats/weapons per unit.
 
 **Adding a new format:** Implement `parseFoo(data)` returning `{ leaders, groups, characters }` and `parseFullUnit(data, id)` returning full unit stats. Register in `detectFormat` and `store.loadFile`. No other files need changing.

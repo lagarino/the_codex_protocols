@@ -16,10 +16,10 @@ npm run build      # production build → dist/
 
 ## Supported input formats
 
-| Format | Load | Export JSON | Print |
-|---|---|---|---|
-| TTS save (`.json`) | ✓ | ✓ | ✓ |
-| Yellowscribe (`.json`) | ✓ | — | ✓ |
+| Format | Load | Export JSON | Export Yellowscribe | Print |
+|---|---|---|---|---|
+| TTS save (`.json`) | ✓ | ✓ | ✓ | ✓ |
+| Yellowscribe (`.json`) | ✓ | — | ✓ | ✓ |
 
 ## Project structure
 
@@ -34,6 +34,7 @@ src/
 
   engine/          Pure functions: army model → output artifacts
     output.js        generateOutput() — TTS JSON export
+    yellowscribe.js  generateYellowscribe() — Yellowscribe JSON export (works from both formats)
     print.js         buildPrintOutput() — HTML print document
 
   state/
